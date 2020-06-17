@@ -272,7 +272,6 @@ class ControllerExtensionPaymentGate2play extends Controller
             'MASTER' => 'Master Card',
             'DISCOVER' => 'Discover',
             'AMEX' => 'American Express',
-            'STC_PAY' => 'STCPay',
             'MADA' => 'Mada',
 
         );
