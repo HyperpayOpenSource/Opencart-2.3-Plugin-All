@@ -4,6 +4,20 @@ class ControllerExtensionPaymentGate2playMada extends Controller
 {
     private $error = array();
 
+    public function install()
+    {
+        $sql = "CREATE TABLE IF NOT EXISTS " . DB_PREFIX . "hp_mada_saving_cards (
+        id INT AUTO_INCREMENT,
+         registration_id VARCHAR(255) NOT NULL,
+         customer_id VARCHAR(255) NOT NULL,
+         mode int (10) NOT NULL,
+         PRIMARY KEY (id)
+     )  ENGINE=INNODB;";
+
+        $this->db->query($sql);
+    }
+
+
     public function index()
     {
         $this->load->language('payment/gate2play_mada');
@@ -117,6 +131,12 @@ class ControllerExtensionPaymentGate2playMada extends Controller
 
         $data['entry_connector'] = $this->language->get('entry_connector');
         $data['entry_all_connector'] = $this->get_gate2play_mada_connector();
+
+        $data['tokenization_status'] = $this->language->get('tokenization_status');
+
+        $data['tokenization_status_off'] = $this->language->get('tokenization_status_off');
+        $data['tokenization_status_on'] = $this->language->get('tokenization_status_on');
+
         //-----------------------------------------------------------------------
 
         if (isset($this->request->post['gate2play_mada_status'])) {
@@ -226,6 +246,11 @@ class ControllerExtensionPaymentGate2playMada extends Controller
             $data['gate2play_mada_connector'] = $this->config->get('gate2play_mada_connector');
         }
 
+        if (isset($this->request->post['gate2play_mada_tokenization_status'])) {
+            $data['gate2play_mada_tokenization_status'] = $this->request->post['gate2play_mada_tokenization_status'];
+        } else {
+            $data['gate2play_mada_tokenization_status'] = $this->config->get('gate2play_mada_tokenization_status');
+        }
 
         $data['text_missing'] = $this->language->get('text_missing');
 

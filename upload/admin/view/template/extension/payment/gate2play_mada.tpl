@@ -162,6 +162,15 @@
                         </div>
                     </div>
                     <div class="form-group required">
+                        <label class="col-sm-2 control-label"><?php echo $tokenization_status ?> </label>
+                        <div class="col-sm-10">
+                            <select name="gate2play_mada_tokenization_status" class="form-control">
+                                <option value="0" <?php echo ($gate2play_mada_tokenization_status == '0')?'selected="selected"':'' ?>><?php echo $tokenization_status_off ?></option>
+                                <option value="1" <?php echo ($gate2play_mada_tokenization_status == '1')?'selected="selected"':'' ?>><?php echo $tokenization_status_on ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group required">
                         <label class="col-sm-2 control-label"
                             for="input-style"><?php echo $entry_payment_style; ?></label>
                         <div class="col-sm-10">
