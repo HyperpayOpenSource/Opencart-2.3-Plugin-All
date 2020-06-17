@@ -23,7 +23,7 @@ class ControllerExtensionPaymentGate2play extends Controller
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         $orderAmount = $order_info['total'];
         $orderid = $this->session->data['order_id'];
-
+        $customer_id = $order_info['customer_id'];
 
         $channel = $this->config->get('gate2play_channel');
         $mode = $this->config->get('gate2play_trans_mode');
@@ -42,7 +42,7 @@ class ControllerExtensionPaymentGate2play extends Controller
         $country = $order_info['payment_iso_code_2'];
         $email = $order_info['email'];
         $ip = $order_info['ip'];
-
+        $tokenization = $customer_id > 0 ? $this->config->get('gate2play_tokenization_status') : 0;
         if (empty($state)) {
             $state = $city;
         }
@@ -59,6 +59,17 @@ class ControllerExtensionPaymentGate2play extends Controller
         $datacontent .= '&customParameters[bill_number]=' . $transactionID;
         $datacontent .= '&customParameters[locale]=' . $this->session->data['language'];
 
+        if ($tokenization && $customer_id > 0) {
+            //$data .=  "&createRegistration=true";
+
+            $registrationIDs = $this->db->query("SELECT * FROM  " . DB_PREFIX . "hp_saving_cards WHERE customer_id =$customer_id and mode = '" . $testMode . "'");
+            if ($registrationIDs) {
+
+                foreach ($registrationIDs->rows as $key => $row) {
+                    $datacontent .= "&registrations[$key].id=" . $row['registration_id'];
+                }
+            }
+        }
 
         $firstNameBilling = preg_replace('/\s/', '', str_replace("&", "", $firstName));
         $surNameBilling = preg_replace('/\s/', '', str_replace("&", "", $family));
@@ -125,6 +136,7 @@ class ControllerExtensionPaymentGate2play extends Controller
 
         $data['formStyle'] = $this->config->get('gate2play_payment_style');
         $data['language_code'] = $this->session->data['language'];
+        $data['tokenization'] = $tokenization;
 
         $http = explode(':', $this->url->link('checkout/success'));
         $url = HTTP_SERVER;
@@ -186,7 +198,21 @@ class ControllerExtensionPaymentGate2play extends Controller
 
             $order_info = $this->model_checkout_order->getOrder($orderid);
 
+
             if ($order_info) {
+                if (isset($resultJson->registrationId)) {
+
+                    $registrationID = $resultJson->registrationId;
+
+                    $customerID = $order_info['customer_id'];
+
+                    $registrationIDs = $this->db->query("SELECT *  FROM " . DB_PREFIX . "hp_saving_cards WHERE registration_id ='$registrationID' and mode = '" . $testMode . "'");
+
+                    if (count($registrationIDs->rows) == 0) {
+                        $this->db->query("INSERT INTO " . DB_PREFIX . "hp_saving_cards (customer_id,registration_id,mode) values ('$customerID','$registrationID','$testMode')");
+                    }
+                }
+
                 if ($success == 1) {
                     // Order is accepted.
                     $transUniqueID = $resultJson->id;
