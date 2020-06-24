@@ -122,6 +122,8 @@ class ControllerExtensionPaymentGate2playApple extends Controller
         $data['payment_brands_applepay'] = $payment_brands;
         $data['scriptURL_applepay'] = $scriptURL . $token;
 
+        $data['supportedNetworks'] = json_encode($this->config->get('gate2play_apple_supported_networks'));
+
         $data['formStyle_applepay'] = $this->config->get('gate2play_apple_payment_style');
         $data['language_code_applepay'] = $this->session->data['language'];
 

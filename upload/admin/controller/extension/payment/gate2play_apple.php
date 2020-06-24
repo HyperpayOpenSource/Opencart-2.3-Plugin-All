@@ -105,6 +105,9 @@ class ControllerExtensionPaymentGate2playApple extends Controller
         $data['entry_brands'] = $this->language->get('entry_brands');
         $data['entry_all_brands'] = $this->get_gate2play_apple_payment_methods();
 
+        $data['entry_supported_networks'] = $this->language->get('entry_supported_networks');
+        $data['entry_all_supported_networks'] = $this->get_gate2play_apple_supported_networks();
+
         $data['entry_payment_style'] = $this->language->get('Payment Style');
         $data['entry_all_payment_style'] = $this->get_gate2play_apple_payment_style();
 
@@ -177,6 +180,12 @@ class ControllerExtensionPaymentGate2playApple extends Controller
             $data['gate2play_apple_brands'] = $this->request->post['gate2play_apple_brands'];
         } else {
             $data['gate2play_apple_brands'] = $this->config->get('gate2play_apple_brands');
+        }
+
+        if (isset($this->request->post['gate2play_apple_supported_networks'])) {
+            $data['gate2play_apple_supported_networks'] = $this->request->post['gate2play_apple_supported_networks'];
+        } else {
+            $data['gate2play_apple_supported_networks'] = $this->config->get('gate2play_apple_supported_networks');
         }
 
         if (isset($this->request->post['gate2play_apple_payment_style'])) {
@@ -272,6 +281,17 @@ class ControllerExtensionPaymentGate2playApple extends Controller
         return $gate2play_apple_payments;
     }
 
+    function get_gate2play_apple_supported_networks()
+    {
+        $hyperpayApplePay_supported_networks = array(
+            "amex" => "Amex",
+            "masterCard" => "MasterCard",
+            "visa" => "Visa",
+            "mada" => "Mada"
+        );
+
+        return $hyperpayApplePay_supported_networks;
+    }
 
     private function get_gate2play_apple_trans_mode()
     {

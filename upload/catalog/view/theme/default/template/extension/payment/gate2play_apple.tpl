@@ -14,7 +14,7 @@ var wpwlOptions = {
 
 wpwlOptions.applePay = {
     merchantCapabilities: ["supports3DS"],
-    supportedNetworks: ["amex", "masterCard", "visa", "mada"]
+    supportedNetworks: <?php echo $supportedNetworks ?>
 }
 </script>
 <?php if ($language_code_applepay == 'ar') { ?>
