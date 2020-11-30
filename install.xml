@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>Hyperpay Mod - Add icon to payment_method</name>
+	<version>3.x</version>
+	<code>Hyperpay Mod</code>
+	<author>Hyperpay(https://www.hyperpay.com)</author>
+	<link>https://www.hyperpay.com/</link>
+
+
+   <file path="catalog/view/theme/*/template/checkout/payment_method.tpl">
+		<operation error="log">
+			<search><![CDATA[<?php echo $payment_method['title']; ?>]]></search>
+			<add position="after"><![CDATA[
+								<?php if (isset($payment_method['icon'])) { ?>
+									<img width="60" height="30" src="<?php echo $payment_method['icon']; ?>" />
+						    <?php } ?>
+				]]></add>
+		</operation>
+	</file>
+
+</modification>
