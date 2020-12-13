@@ -83,7 +83,7 @@ class ControllerExtensionPaymentGate2play extends Controller
         }
 
 
-        //-------------------------------------------------------        
+        //-------------------------------------------------------
 
         $data['text_edit'] = $this->language->get('text_edit');
 
@@ -152,8 +152,10 @@ class ControllerExtensionPaymentGate2play extends Controller
 
         if (isset($this->request->post['gate2play_sort_order'])) {
             $data['gate2play_sort_order'] = $this->request->post['gate2play_sort_order'];
-        } else {
+        } elseif($this->config->get('gate2play_sort_order')) {
             $data['gate2play_sort_order'] = $this->config->get('gate2play_sort_order');
+        }else{
+          $data['gate2play_sort_order'] = 2;
         }
 
         if (isset($this->request->post['gate2play_testmode'])) {
