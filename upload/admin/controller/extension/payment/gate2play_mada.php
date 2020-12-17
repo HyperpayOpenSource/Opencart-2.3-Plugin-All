@@ -256,6 +256,11 @@ class ControllerExtensionPaymentGate2playMada extends Controller
 
         $data['text_missing'] = $this->language->get('text_missing');
 
+        if($this->config->get('config_language') == 'ar'){
+          $data['gate2play_mada_heading_title'] = 'بطاقة مدى البنكية';
+        }else{
+          $data['gate2play_mada_heading_title'] = 'mada card';
+        }
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
