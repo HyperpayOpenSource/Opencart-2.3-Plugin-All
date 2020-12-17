@@ -32,7 +32,7 @@
                         <label class="col-sm-2 control-label"
                             for="input-heading-title"><?php echo $entry_heading_title; ?></label>
                         <div class="col-sm-10">
-                            <input type="text" name="gate2play_mada_heading_title"
+                            <input readonly type="text" name="gate2play_mada_heading_title"
                                 value="<?php echo $gate2play_mada_heading_title; ?>"
                                 placeholder="<?php echo $entry_heading_title; ?>" id="input-heading-title"
                                 class="form-control" />
