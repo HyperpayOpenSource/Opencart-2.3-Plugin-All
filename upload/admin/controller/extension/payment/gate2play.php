@@ -299,6 +299,7 @@ class ControllerExtensionPaymentGate2play extends Controller
             'DISCOVER' => 'Discover',
             'AMEX' => 'American Express',
             'MADA' => 'Mada',
+            'JCB'=>'JCB'
 
         );
 

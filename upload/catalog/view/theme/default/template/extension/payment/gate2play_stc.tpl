@@ -12,6 +12,9 @@
             "hideInitialPaymentForms": "true",
             "requireCvv": "true"
         },
+         browser: {
+           threeDChallengeWindow: 5
+       },
         locale: "<?php echo $language_code ?>",
         onReady: function() {
             $('.wpwl-form-virtualAccount-STC_PAY .wpwl-wrapper-radio-qrcode').hide();
