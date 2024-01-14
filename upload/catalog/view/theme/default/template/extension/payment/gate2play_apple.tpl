@@ -9,6 +9,9 @@ form {
 var wpwlOptions = {
     style: "<?php echo $formStyle_applepay ?>",
     paymentTarget: "_top",
+     browser: {
+           threeDChallengeWindow: 5
+       },
     locale: "<?php echo $language_code_applepay ?>"
 }
 

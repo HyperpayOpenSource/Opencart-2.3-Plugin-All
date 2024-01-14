@@ -39,6 +39,9 @@ function displayName(element) {
             "hideInitialPaymentForms": "true",
             "requireCvv": "true"
         },
+         browser: {
+           threeDChallengeWindow: 5
+       },
         locale: "<?php echo $language_code ?>",
         onReady: function() {
           $('.wpwl-wrapper-cardNumber').each(function () {
